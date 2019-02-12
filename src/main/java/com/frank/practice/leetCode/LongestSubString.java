@@ -38,7 +38,7 @@ public class LongestSubString {
     }
 
     public static void main(String[] args) {
-        String str = "";
+        String str = "adcdedd";
         LongestSubString testObj = new LongestSubString();
         int subStr = testObj.findLongestSubString(str);
         System.out.println(str + " longest no repeating substr is:" + subStr);
