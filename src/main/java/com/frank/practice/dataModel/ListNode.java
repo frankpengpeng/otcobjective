@@ -1,10 +1,15 @@
 package com.frank.practice.dataModel;
 
+import java.net.InetSocketAddress;
+
 public class ListNode {
     public Integer value;
     public ListNode next;
 
 
+    public ListNode(Integer value){
+        this.value = value;
+    }
     public ListNode(Integer value, ListNode next) {
         this.value = value;
         this.next = next;

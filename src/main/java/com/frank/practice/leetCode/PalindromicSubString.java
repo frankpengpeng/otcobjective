@@ -65,7 +65,7 @@ public class PalindromicSubString {
     public static void main(String[] args) {
         String str= "ababab";
         PalindromicSubString demo = new PalindromicSubString();
-        String subStr = demo.findLongestPalinSubString(str);
+        String subStr = demo.findSubStr(str);
         System.out.println(subStr);
     }
 }
