@@ -9,57 +9,59 @@ public class MidOf2SortArrayUseMerge {
     }
 
     private static double getMid(int[] arrA, int[] arrB) {
-        if(arrA == null){
+        if(arrA == null) {
             return getMidOfArr(arrB);
         }
-        if(arrB == null) {
+        if(arrB == null){
             return getMidOfArr(arrA);
         }
         int[] mergedArr = merge(arrA, arrB);
         return getMidOfArr(mergedArr);
     }
-    private static double getMidOfArr(int[] arr){
-        if(arr == null || arr.length == 0){
-            return 0;
-        }
-        else if(arr.length == 1){
-            return arr[0];
-        }
-        else if(arr.length %2 ==0) {
-            int midInx = (arr.length-1)/2;
-            return Double.valueOf(arr[midInx] + arr[midInx+1])/2;
-        }
-        else {
-            int midInx = (arr.length-1)/2;
-            return Double.valueOf(arr[midInx]);
-        }
-
-    }
 
     private static int[] merge(int[] arrA, int[] arrB) {
-        int[] retArr = new int[arrA.length + arrB.length];
-        int i = 0; int j =0; int k=0;
-        while (i < arrA.length && j<arrB.length){
-            if (arrA[i] <= arrB[j]){
-                retArr[k] = arrA[i];
-                i++;
+        int[] res = new int[arrA.length+arrB.length];
+        int left = 0;
+        int right = 0;
+        int k =0;
+        while (left<arrA.length && right<arrB.length){
+            if(arrA[left] < arrB[right]){
+                res[k] = arrA[left];
+                left++;
                 k++;
-            }else {
-                retArr[k] = arrB[j];
-                j++;
+            } else {
+                res[k] = arrB[right];
+                right++;
                 k++;
             }
         }
-        while (i<arrA.length){
-            retArr[k] = arrA[i];
+        while (left<arrA.length){
+            res[k] = arrA[left];
             k++;
-            i++;
+            left++;
         }
-        while (j<arrB.length){
-            retArr[k] = arrB[j];
+        while (right<arrB.length){
+            res[k] = arrB[right];
+            right++;
             k++;
-            j++;
         }
-        return retArr;
+        return res;
     }
+
+    private static double getMidOfArr(int[] arrA) {
+        if(arrA == null || arrA.length ==0) {
+            return 0;
+        }
+        if(arrA.length == 1){
+            return arrA[0];
+        }
+        if(arrA.length%2 == 0) {
+            int midIndex = (arrA.length-1)/2;
+            return arrA[midIndex];
+        } else {
+            int midIndex = (arrA.length-1)/2;
+            return Double.valueOf(arrA[midIndex] + arrA[midIndex+1])/2;
+        }
+    }
+
 }

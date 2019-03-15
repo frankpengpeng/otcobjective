@@ -68,4 +68,32 @@ public class PalindromicSubString {
         String subStr = demo.findSubStr(str);
         System.out.println(subStr);
     }
+
+    private String findPalindSubStr(String str){
+        if(str == null || str.length() == 1){
+            return str;
+        }
+        int start = 0;
+        int end = 0;
+        for(int i = 0; i<str.length(); i++){
+            int len1 = expendStr(str, i,i);
+            int len2 = expendStr(str, i,i+1);
+            int len = Math.max(len1, len2);
+            if(len > end-start){
+                start = i+(str.length() -1)/2;
+                end = 1+str.length()/2;
+            }
+        }
+        return str.substring(start,end+1);
+    }
+
+    private int expendStr(String str, int i, int j) {
+        int left = i;
+        int right = j;
+        while (left>=0 && right<str.length() && str.charAt(left) == str.charAt(right)){
+            left--;
+            right++;
+        }
+        return right-left-1;
+    }
 }

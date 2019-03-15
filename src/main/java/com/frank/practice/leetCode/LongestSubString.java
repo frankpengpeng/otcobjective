@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class LongestSubString {
-    private int findLongestSubString(String str){
+    private String findLongestSubString(String str){
         if(str == null){
-            return 0;
+            return null;
         }
         if(str.length() ==1){
-            return 1;
+            return str;
         }
         char[] charArr = str.toCharArray();
         int max=0;
@@ -34,13 +34,41 @@ public class LongestSubString {
                 subStr = str.substring(j+1,k);
             }
         }
-        return max;
+        return subStr;
     }
 
     public static void main(String[] args) {
         String str = "adcdedd";
         LongestSubString testObj = new LongestSubString();
-        int subStr = testObj.findLongestSubString(str);
+        String subStr = testObj.findLongestSubString(str);
         System.out.println(str + " longest no repeating substr is:" + subStr);
+    }
+
+    private String longestNonRepeatedStr(String str){
+        if(str == null || str.length() ==1){
+            return str;
+        }
+        char[] charArr = str.toCharArray();
+        int max = 0;
+        String subStr = "";
+        for(int i=1; i<str.length();i++){
+            int left = i-1;
+            int right = i+i;
+            Set<Character> set = new HashSet<>();
+            set.add(charArr[i]);
+            while (left>=0 && !set.contains(charArr[left])){
+                set.add(charArr[left]);
+                left--;
+            }
+            while (right < charArr.length && !set.contains(charArr[right])){
+                set.add(charArr[right]);
+                right++;
+            }
+            if(set.size() > max){
+                max = set.size();
+                subStr = str.substring(left+1,right);
+            }
+        }
+        return subStr;
     }
 }

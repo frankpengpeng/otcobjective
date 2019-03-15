@@ -1,7 +1,5 @@
 package com.frank.practice.leetCode;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.MultiValuedNodeHeapIterator;
-
 import java.util.PriorityQueue;
 
 public class KthLargestNum {

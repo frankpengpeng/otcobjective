@@ -60,4 +60,30 @@ public class QuickSort {
         quickSort2(arr, left, i-1);
         quickSort2(arr, i+1, right);
     }
+
+    private void quickSort3(int[] arr, int left, int right){
+        if(left>=right){
+            return;
+        }
+        int i = left;
+        int j = right;
+        int temp = arr[left];
+        while (i<j){
+            while (i<j && arr[i] <= temp){
+                i++;
+            }
+            while (i<j && arr[j] >= temp){
+                j--;
+            }
+            if(i<j){
+                int x = arr[i];
+                arr[i] = arr[j];
+                arr[j] = x;
+            }
+        }
+        arr[left] = arr[right];
+        arr[right] = temp;
+        quickSort3(arr, left, i-1);
+        quickSort3(arr, i+i, right);
+    }
 }

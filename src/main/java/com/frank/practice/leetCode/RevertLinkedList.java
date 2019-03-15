@@ -33,4 +33,17 @@ public class RevertLinkedList {
         }
         return pre;
     }
+
+
+    private ListNode doRevert(ListNode node){
+        ListNode temp = null;
+        ListNode pre = null;
+        while (node != null) {
+            temp = node.next;
+            node.next = pre;
+            pre = node;
+            node = temp;
+        }
+        return pre;
+    }
 }
