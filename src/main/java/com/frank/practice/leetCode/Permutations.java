@@ -1,11 +1,12 @@
 package com.frank.practice.leetCode;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.util.CollectionUtils;
+
+import java.util.*;
 
 public class Permutations {
     public static void main(String[] args) {
-        int[] arr = new int[]{1,2,3,4};
+        int[] arr = new int[]{1,1,2};
         Permutations demo = new Permutations();
         List<List<Integer>> res = demo.findPermuations(arr);
         for(List list:res){
@@ -15,25 +16,49 @@ public class Permutations {
 
     private  List<List<Integer>> findPermuations(int[] arr) {
         List<Integer> tempResult = new ArrayList<>();
-        List<List<Integer>> result = new ArrayList<>();
-        result = findAll(arr, 0,tempResult, result);
-        return result;
+        Set<List<Integer>> result = new HashSet<>();
+        findAll(0,arr, result);
+        return new ArrayList<>(result);
     }
 
-    private  List<List<Integer>> findAll(int[] arr, int index, List<Integer> tempResult, List<List<Integer>> result) {
-        for(int i= index; i< arr.length; i++){
-            if(tempResult.contains(arr[i])){
-                findAll(arr, index +1,tempResult, result);
-            } else {
-                tempResult.add(Integer.valueOf(arr[i]));
-                if(tempResult.size() == arr.length){
-                    result.add(new ArrayList<>(tempResult));
-                    tempResult.clear();
-                }
-                findAll(arr, index +1,tempResult, result);
+    private  void findAll(int index, int[] arr, Set<List<Integer>> result) {
+        if(index == arr.length){
+            List<Integer> tempRes = new ArrayList<>();
+            for(int e:arr){
+                tempRes.add(Integer.valueOf(e));
             }
-
+            result.add(tempRes);
         }
-        return result;
+        for(int j= index; j< arr.length; j++){
+            int temp = arr[j];
+            arr[j] = arr[index];
+            arr[index] = temp;
+
+            findAll(index +1, arr, result);
+
+            temp = arr[j];
+            arr[j] = arr[index];
+            arr[index] = temp;
+        }
+    }
+
+    private  void findPermutations(int index, int[] arr, Set<List<Integer>> result, List<Integer> tempResult) {
+        if(index == arr.length) {
+            tempResult = new ArrayList<>();
+            for(int e:arr){
+                tempResult.add(Integer.valueOf(e));
+            }
+            result.add(tempResult);
+        }
+        for(int j = index; j<arr.length; j++){
+            int temp = arr[j];
+            arr[j] = arr[index];
+            arr[index] = temp;
+            findPermutations(index +1, arr, result, tempResult);
+
+            temp = arr[j];
+            arr[j] = arr[index];
+            arr[index] = temp;
+        }
     }
 }
