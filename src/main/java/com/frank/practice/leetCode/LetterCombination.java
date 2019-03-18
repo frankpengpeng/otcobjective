@@ -13,50 +13,31 @@ public class LetterCombination {
 
     }
     private List<String> combineLetters(String digits) {
-        Map<Integer,String> numToChars = new HashMap<>();
-        numToChars.put(0,"");
-        numToChars.put(1,"");
-        numToChars.put(2,"abc");
-        numToChars.put(3,"def");
-        numToChars.put(4,"ghi");
-        numToChars.put(5,"jkl");
-        numToChars.put(6,"mno");
-        numToChars.put(7,"pqrs");
-        numToChars.put(8,"tuv");
-        numToChars.put(9,"wxyz");
         List<String> result = new ArrayList<>();
         if(digits == null ||digits.length() ==0) return result;
-        combineLetters(digits, numToChars, result, "",0);
+        result = combinateLetters(digits);
         return result;
     }
 
-    private void combineLetters(String digits, Map<Integer,String> numToChars, List<String> result, String letter, int index) {
 
-            Integer num = Integer.parseInt(String.valueOf(digits.charAt(index)));
-            String numStr = numToChars.get(num);
-            if (index == digits.length()){
-                result.add(letter);
-                return;
-            }
-            for(char cur:numToChars.get(digits.charAt(index) - '2').toCharArray()) {
-                combineLetters(digits, numToChars, result, letter+cur, index + 1);
-            }
-
-    }
 
     private String[] strConst = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-    private List<String> strList = new ArrayList<String>();
 
-    public List<String> letterCombinations(String digits) {
-        if(digits != null && digits.length() != 0) process(digits, 0, "");
-        return strList;
+    public List<String> combinateLetters(String digits) {
+        List<String> res = new ArrayList<>();
+        if (digits != null && digits.length() != 0) {
+            doCombinate(res, digits, 0, "");
+        }
+        return res;
     }
 
-    public void process(String digits, int pos, String str) {
-        if(pos == digits.length()) {
-            strList.add(str);
+    private void doCombinate(List<String> res, String digits, int i, String s) {
+        if(i == digits.length()){
+            res.add(s);
             return;
-        };
-        for(char cur : strConst[digits.charAt(pos) - '2'].toCharArray()) process(digits, pos + 1, str + cur);
+        }
+        for(char c:strConst[digits.charAt(i)- '2'].toCharArray()){
+            doCombinate(res, digits, i+1, s+c);
+        }
     }
 }

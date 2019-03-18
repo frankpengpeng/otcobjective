@@ -17,27 +17,71 @@ public class RevertKGroup{
         ListNode node1 = new ListNode(1, node2 );
 
         RevertKGroup demo = new RevertKGroup();
-        demo.revertGroup(node1, 2);
-        System.out.println(node1.toString());
-    }
-
-    private void revertGroup(ListNode head, int k){
-        ListNode pre = null;
+        ListNode head = demo.reverKNodes(node1,2);
         while (head != null) {
-            pre = revert(head,pre,k);
-            head = pre.next;
+            System.out.println(head.getValue());
+            head = head.next;
         }
     }
-    private ListNode revert(ListNode head, ListNode pre, int k) {
-            ListNode tmp = null;
-            int in = k;
-            while (head != null && in > 0) {
-                tmp = head.getNext();
-                head.setNext(pre);
-                pre = head;
-                head = tmp;
-                in--;
-            }
-            return pre;
+
+    private ListNode revertGroup(ListNode head, int k){
+        ListNode pre = null;
+        while (head != null) {
+            pre = revertList(head,k);
+            head = pre;
+        }
+        return pre;
     }
+
+
+    private ListNode revertList(ListNode node, int k){
+        int n = k;
+        ListNode pre = null;
+        ListNode temp = null;
+        while (node != null && n >0){
+            temp = node.next;
+            node.next = pre;
+            pre = node;
+            node =temp;
+            n--;
+        }
+        pre.next = temp;
+        return temp;
+    }
+
+    private ListNode revert2Nodes(ListNode head){
+        if(head == null || head.next == null) {
+            return head;
+        }
+        ListNode node = head.next;
+        head.next = head.next.next;
+        node.next = head;
+        node.next.next = revert2Nodes(node.next.next);
+
+        return node;
+    }
+
+    private ListNode reverKNodes(ListNode head, int k) {
+        ListNode last = head;
+        int n = 0;
+        while (n<k){
+            if(last == null){
+                return head;
+            }
+            last = last.next;
+            n++;
+        }
+        ListNode dummy = head;
+        ListNode a = head.next;
+        for(int i=0;i<k-1;i++){
+            ListNode b = a.next;
+            a.next = head;
+            head = a;
+            a = b;
+        }
+        dummy.next = reverKNodes(last,k);
+        return head;
+    }
+
+
 }

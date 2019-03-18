@@ -57,6 +57,9 @@ public class MergeTwoSortedList {
     }
 
     private ListNode mergeKList(ListNode[] lists) {
+        if(lists==null || lists.length == 0) {
+            return null;
+        }
         int left = 0;
         int right = lists.length -1;
         return mergeKLinkedList(lists, left, right);
@@ -65,27 +68,12 @@ public class MergeTwoSortedList {
     private ListNode mergeKLinkedList(ListNode[] lists, int left, int right) {
         if(left == right){
             return lists[left];
+        } else if(right - left == 1){
+            return mergeTwoList(lists[left] ,lists[right]);
         }
         int mid = (left + right)/2;
         ListNode leftNode = mergeKLinkedList(lists, left, mid);
         ListNode rightNode = mergeKLinkedList(lists, mid+1, right);
-        ListNode dummmy = new ListNode(0);
-        ListNode node = dummmy;
-        while (leftNode != null && rightNode != null){
-            if(leftNode.value <= rightNode.value){
-                dummmy.next = new ListNode(leftNode.value);
-                leftNode = leftNode.next;
-            } else {
-                dummmy.next = new ListNode(rightNode.value);
-                rightNode = rightNode.next;
-            }
-        }
-        if(leftNode != null){
-            dummmy.next = leftNode;
-        }
-        if(rightNode != null){
-            dummmy.next = rightNode;
-        }
-        return node.next;
+        return mergeTwoList(leftNode, rightNode);
     }
 }
